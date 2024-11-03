@@ -51,4 +51,18 @@ export class EmployeeController {
         .json({ message: error instanceof Error ? error.message : error })
     }
   }
+
+  async update(req: Request, res: Response): Promise<void> {
+    const { id } = req.params
+    const data = req.body
+
+    try {
+      const updatedEmployee = await this.employeeService.update(id, data)
+      res.status(200).json(updatedEmployee)
+    } catch (error) {
+      res
+        .status(400)
+        .json({ message: error instanceof Error ? error.message : error })
+    }
+  }
 }
