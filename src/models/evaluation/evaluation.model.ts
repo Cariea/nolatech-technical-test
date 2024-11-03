@@ -2,6 +2,7 @@ import { model, Schema, Types, Document } from 'mongoose'
 
 export interface Evaluation {
   questions: Types.ObjectId[]
+  name: string
   manager: Types.ObjectId
 }
 
@@ -15,6 +16,10 @@ const evaluationSchema = new Schema<EvaluationDocument>({
       required: true
     }
   ],
+  name: {
+    type: String,
+    required: true
+  },
   manager: {
     type: Schema.Types.ObjectId,
     ref: 'User',
