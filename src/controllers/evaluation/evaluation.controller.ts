@@ -42,4 +42,44 @@ export class EvaluationController {
         .json({ message: error instanceof Error ? error.message : error })
     }
   }
+
+  async findAll(_req: ExtendedRequest, res: Response): Promise<void> {
+    try {
+      const evaluations = await this.evaluationService.findAll()
+      res.status(200).json({ evaluations })
+    } catch (error) {
+      res
+        .status(400)
+        .json({ message: error instanceof Error ? error.message : error })
+    }
+  }
+
+  async findAllManagerEvaluations(
+    req: ExtendedRequest,
+    res: Response
+  ): Promise<void> {
+    const manager = req.user?.id
+    try {
+      const managerDocument = await this.userService.findById(
+        manager as unknown as Types.ObjectId
+      )
+
+      if (!managerDocument) {
+        throw new StatusError({
+          message: 'Manager no encontrado',
+          statusCode: STATUS.NOT_FOUND
+        })
+      }
+
+      const evaluations =
+        await this.evaluationService.findAllManagerEvaluations(
+          manager as string
+        )
+      res.status(200).json({ evaluations })
+    } catch (error) {
+      res
+        .status(400)
+        .json({ message: error instanceof Error ? error.message : error })
+    }
+  }
 }

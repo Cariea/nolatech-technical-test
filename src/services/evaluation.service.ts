@@ -6,10 +6,10 @@ import {
 } from '../models/evaluation/evaluation.model'
 
 export class EvaluationService {
-  private readonly questionRepository: MongooseRepository<EvaluationDocument>
+  private readonly evaluationRepository: MongooseRepository<EvaluationDocument>
 
   constructor() {
-    this.questionRepository = new MongooseRepository(EvaluationModel)
+    this.evaluationRepository = new MongooseRepository(EvaluationModel)
   }
 
   async create(
@@ -17,6 +17,18 @@ export class EvaluationService {
     name: string,
     manager: Types.ObjectId
   ): Promise<EvaluationDocument> {
-    return await this.questionRepository.create({ questions, name, manager })
+    return await this.evaluationRepository.create({ questions, name, manager })
+  }
+
+  async findAll(): Promise<EvaluationDocument[]> {
+    return this.evaluationRepository.findAll()
+  }
+
+  async findAllManagerEvaluations(
+    manager: string
+  ): Promise<EvaluationDocument[]> {
+    return this.evaluationRepository.find({
+      manager: new Types.ObjectId(manager)
+    })
   }
 }

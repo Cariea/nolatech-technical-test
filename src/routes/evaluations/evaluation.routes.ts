@@ -19,4 +19,14 @@ router.post(
   (req, res) => evaluationController.create(req, res)
 )
 
+router.get('/', hasAuthorization([Roles.MANAGER, Roles.ADMIN]), (req, res) =>
+  evaluationController.findAll(req, res)
+)
+
+router.get(
+  '/manager',
+  hasAuthorization([Roles.MANAGER, Roles.ADMIN]),
+  (req, res) => evaluationController.findAllManagerEvaluations(req, res)
+)
+
 export default router
