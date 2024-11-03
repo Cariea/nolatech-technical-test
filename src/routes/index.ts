@@ -3,6 +3,7 @@ import { verifyToken } from '../_middlewares/auth-guard'
 import AuthRoutes from './auth/auth.routes'
 import UserRoutes from './user/user.routes'
 import EmployeeRoutes from './employee/employee.routes'
+import EvaluationsRoutes from './evaluations/evaluation.routes'
 
 export const router = Router()
 
@@ -17,3 +18,4 @@ router.use('/user', UserRoutes)
 router.use(verifyToken())
 
 router.use('/employees', EmployeeRoutes)
+router.use('/evaluations', EvaluationsRoutes)
