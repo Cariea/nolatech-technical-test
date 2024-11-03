@@ -8,6 +8,9 @@ import { Roles } from '../../models/user/enums/roles.enum'
 const router = Router()
 const employeeController = new EmployeeController()
 
+router.get('/', hasAuthorization([Roles.ADMIN]), (req, res) =>
+  employeeController.findAll(req, res)
+)
 router.post(
   '/create',
   hasAuthorization([Roles.ADMIN]),
