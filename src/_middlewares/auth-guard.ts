@@ -37,12 +37,18 @@ export const verifyToken =
   }
 
 export const hasAuthorization =
-  (validRoles: Roles) =>
+  (validRoles: string[]) =>
   (req: ExtendedRequest, res: Response, next: NextFunction): any => {
     try {
-      const role = req.user?.role || ''
+      if (!req.user) {
+        return errorResponse(
+          res,
+          STATUS.UNAUTHORIZED,
+          'No autorizado para realizar esta acción'
+        )
+      }
 
-      if (!validRoles.includes(role)) {
+      if (!validRoles.includes(req.user.role)) {
         return errorResponse(
           res,
           STATUS.UNAUTHORIZED,
