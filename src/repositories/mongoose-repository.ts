@@ -1,4 +1,4 @@
-import { Model, Document } from 'mongoose'
+import { Model, Document, FilterQuery } from 'mongoose'
 import { BaseRepository } from './interfaces/base-repository.interface'
 
 export class MongooseRepository<T extends Document>
@@ -17,6 +17,10 @@ export class MongooseRepository<T extends Document>
 
   async findOne(query: any): Promise<T | null> {
     return await this.model.findOne(query).exec()
+  }
+
+  async find(keyValues: FilterQuery<T>): Promise<T[]> {
+    return await this.model.find(keyValues).exec()
   }
 
   async findAll(): Promise<T[]> {
