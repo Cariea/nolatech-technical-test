@@ -20,4 +20,17 @@ export class AuthController {
         .json({ message: error instanceof Error ? error.message : error })
     }
   }
+
+  async login(req: Request, res: Response): Promise<void> {
+    const { email, password } = req.body
+
+    try {
+      const token = await this.authService.login(email, password)
+      res.status(200).json({ token })
+    } catch (error) {
+      res
+        .status(400)
+        .json({ message: error instanceof Error ? error.message : error })
+    }
+  }
 }

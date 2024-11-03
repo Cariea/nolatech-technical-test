@@ -7,9 +7,7 @@ import { Roles } from '../models/user/enums/roles.enum'
 
 interface ExtendedRequestUser {
   id: string
-  name: string
-  email: string
-  role: string
+  role: Roles
   iat: number
   exp: number
 }
