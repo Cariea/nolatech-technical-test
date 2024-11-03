@@ -14,8 +14,9 @@ export class EvaluationService {
 
   async create(
     questions: Types.ObjectId[],
+    name: string,
     manager: Types.ObjectId
   ): Promise<EvaluationDocument> {
-    return this.questionRepository.create({ questions, manager })
+    return await this.questionRepository.create({ questions, name, manager })
   }
 }
