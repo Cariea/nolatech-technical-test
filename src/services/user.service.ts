@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt'
-import { MongooseRepository } from '../repositories/mongoose-repository'
+import { MongooseRepository } from '../_repositories/mongoose-repository'
 import { UserDocument, UserModel } from '../models/user/user.model'
 import { Roles } from '../models/user/enums/roles.enum'
 export class UserService {

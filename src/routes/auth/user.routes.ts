@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { validateData } from '../../middlewares/schema-guard'
+import { validateData } from '../../_middlewares/schema-guard'
 import { createUserDto } from '../../controllers/auth/dto/create-user.dto'
 import { UserController } from '../../controllers/user/user.controller'
 

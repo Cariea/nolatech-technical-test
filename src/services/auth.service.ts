@@ -1,9 +1,9 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { MongooseRepository } from '../repositories/mongoose-repository'
+import { MongooseRepository } from '../_repositories/mongoose-repository'
 import { UserDocument, UserModel } from '../models/user/user.model'
 import { Roles } from '../models/user/enums/roles.enum'
-import { JWT_EXPIRATION, JWT_SECRET_KEY } from '../config/environment'
+import { JWT_EXPIRATION, JWT_SECRET_KEY } from '../_config/environment'
 import { StatusError } from '../utils/responses/status-error'
 import { STATUS } from '../utils/constants'
 export class AuthService {

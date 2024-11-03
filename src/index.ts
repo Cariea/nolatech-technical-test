@@ -1,7 +1,7 @@
 import express from 'express'
-import { PORT } from './config/environment'
+import { PORT } from './_config/environment'
 import { router } from './routes'
-import { connection } from './config/db'
+import { connection } from './_config/db'
 
 //App declaration
 const app = express()

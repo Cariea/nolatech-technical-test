@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import { Request, Response, NextFunction } from 'express'
 import { STATUS } from '../utils/constants'
-import { JWT_SECRET_KEY } from '../config/environment'
+import { JWT_SECRET_KEY } from '../_config/environment'
 import { errorResponse } from '../utils/responses'
 import { Roles } from '../models/user/enums/roles.enum'
 

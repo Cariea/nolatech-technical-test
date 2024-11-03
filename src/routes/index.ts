@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { verifyToken } from '../middlewares/auth-guard'
+import { verifyToken } from '../_middlewares/auth-guard'
 import AuthRoutes from './auth/auth.routes'
 import UserRoutes from './auth/user.routes'
 
