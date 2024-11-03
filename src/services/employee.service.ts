@@ -8,7 +8,7 @@ import { Departments } from '../models/employee/enums/departments.enum'
 import { Roles } from '../models/user/enums/roles.enum'
 import { UserDocument, UserModel } from '../models/user/user.model'
 import { Types } from 'mongoose'
-export class UserService {
+export class EmployeeService {
   private readonly employeeRepository: MongooseRepository<EmployeeDocument>
   private readonly userRepository: MongooseRepository<UserDocument>
 
