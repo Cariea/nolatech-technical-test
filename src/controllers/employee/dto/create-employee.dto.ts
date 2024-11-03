@@ -4,5 +4,7 @@ import { createUserDto } from '../../auth/dto/create-user.dto'
 import { Departments } from '../../../models/employee/enums/departments.enum'
 
 export const createEmployeeDto = createUserDto.extend({
-  department: z.nativeEnum(Departments)
+  department: z.nativeEnum(Departments),
+  salary: z.number().int().positive(),
+  experience: z.number().int().positive()
 })

@@ -5,6 +5,8 @@ export interface EmployeeInterface {
   user: Types.ObjectId
   department: Departments
   manager?: Types.ObjectId
+  salary: number
+  experience: number
 }
 export interface EmployeeDocument extends EmployeeInterface, Document {}
 
@@ -23,6 +25,16 @@ const employeeSchema = new Schema<EmployeeDocument>({
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: false
+  },
+  salary: {
+    type: Number,
+    required: true,
+    min: 1
+  },
+  experience: {
+    type: Number,
+    required: true,
+    min: 1
   }
 })
 

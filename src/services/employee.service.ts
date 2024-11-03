@@ -21,6 +21,8 @@ export class EmployeeService {
     name: string,
     email: string,
     password: string,
+    salary: number,
+    experience: number,
     department: Departments
   ): Promise<EmployeeDocument> {
     const hashedPassword = await bcrypt.hash(password, 10)
@@ -33,6 +35,8 @@ export class EmployeeService {
 
     const employee = await this.employeeRepository.create({
       user: user._id as Types.ObjectId,
+      salary,
+      experience,
       department
     })
 

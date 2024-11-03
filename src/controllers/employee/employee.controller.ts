@@ -9,13 +9,15 @@ export class EmployeeController {
   }
 
   async create(req: Request, res: Response): Promise<void> {
-    const { name, email, password, department } = req.body
+    const { name, email, password, department, salary, experience } = req.body
 
     try {
       const newEmployee = await this.employeeService.create(
         name,
         email,
         password,
+        salary,
+        experience,
         department
       )
       res.status(201).json({ user: newEmployee })
