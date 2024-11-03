@@ -23,8 +23,28 @@ export class MongooseRepository<T extends Document>
     return await this.model.find(keyValues).exec()
   }
 
-  async findAll(): Promise<T[]> {
-    return await this.model.find().exec()
+  async findAll(
+    relations?: (keyof T)[],
+    ignoredFields?: string[]
+  ): Promise<T[]> {
+    const query = this.model.find()
+
+    if (relations && relations.length > 0) {
+      relations.forEach((relation) => {
+        const exclusionString = ignoredFields?.length
+          ? '-' + ignoredFields.join(' -')
+          : ''
+        query.populate(relation as string, exclusionString)
+      })
+    }
+
+    if (ignoredFields && ignoredFields.length > 0) {
+      ignoredFields.forEach((field) => {
+        query.select(`-${field}`)
+      })
+    }
+
+    return await query.exec()
   }
 
   async update(id: string, item: Partial<T>): Promise<T | null> {
