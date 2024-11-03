@@ -1,7 +1,8 @@
 import { Router } from 'express'
 import { verifyToken } from '../_middlewares/auth-guard'
 import AuthRoutes from './auth/auth.routes'
-import UserRoutes from './auth/user.routes'
+import UserRoutes from './user/user.routes'
+import EmployeeRoutes from './employee/employee.routes'
 
 export const router = Router()
 
@@ -14,3 +15,5 @@ router.use('/auth', AuthRoutes)
 router.use('/user', UserRoutes)
 
 router.use(verifyToken())
+
+router.use('/employee', EmployeeRoutes)
