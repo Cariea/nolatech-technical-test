@@ -16,4 +16,4 @@ router.use('/user', UserRoutes)
 
 router.use(verifyToken())
 
-router.use('/employee', EmployeeRoutes)
+router.use('/employees', EmployeeRoutes)

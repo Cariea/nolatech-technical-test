@@ -1,10 +1,11 @@
 import { Router } from 'express'
-import { validateData, validateParams } from '../../_middlewares/schema-guard'
+import { validateBody, validateParams } from '../../_middlewares/schema-guard'
 import { createEmployeeDto } from '../../controllers/employee/dto/create-employee.dto'
 import { EmployeeController } from '../../controllers/employee/employee.controller'
 import { hasAuthorization } from '../../_middlewares/auth-guard'
 import { Roles } from '../../models/user/enums/roles.enum'
 import { userIdSchema } from '../../controllers/employee/dto/get-by-id.employee.dto'
+import { updateEmployeeDto } from '../../controllers/employee/dto/update-employee.dto'
 
 const router = Router()
 const employeeController = new EmployeeController()
@@ -21,10 +22,18 @@ router.get(
 )
 
 router.post(
-  '/create',
+  '/',
   hasAuthorization([Roles.ADMIN]),
-  validateData(createEmployeeDto),
+  validateBody(createEmployeeDto),
   (req, res) => employeeController.create(req, res)
+)
+
+router.put(
+  '/:id',
+  hasAuthorization([Roles.ADMIN]),
+  validateParams(userIdSchema),
+  validateBody(updateEmployeeDto),
+  (req, res) => employeeController.update(req, res)
 )
 
 export default router
