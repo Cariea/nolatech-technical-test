@@ -36,4 +36,17 @@ export class EmployeeController {
         .json({ message: error instanceof Error ? error.message : error })
     }
   }
+
+  async findOne(req: Request, res: Response): Promise<void> {
+    const { id } = req.params
+
+    try {
+      const employee = await this.employeeService.findOne(id)
+      res.status(200).json({ employee })
+    } catch (error) {
+      res
+        .status(400)
+        .json({ message: error instanceof Error ? error.message : error })
+    }
+  }
 }
