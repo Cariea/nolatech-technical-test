@@ -11,8 +11,29 @@ export class MongooseRepository<T extends Document>
     return await newItem.save()
   }
 
-  async findById(id: string): Promise<T | null> {
-    return await this.model.findById(id).exec()
+  async findById(
+    id: string,
+    relations?: (keyof T)[],
+    ignoredFields?: string[]
+  ): Promise<T | null> {
+    const populatedQuery = this.model.findById(id)
+
+    if (relations && relations.length > 0) {
+      relations.forEach((relation) => {
+        const exclusionString = ignoredFields?.length
+          ? '-' + ignoredFields.join(' -')
+          : ''
+        populatedQuery.populate(relation as string, exclusionString)
+      })
+    }
+
+    if (ignoredFields && ignoredFields.length > 0) {
+      ignoredFields.forEach((field) => {
+        populatedQuery.select(`-${field}`)
+      })
+    }
+
+    return await populatedQuery.exec()
   }
 
   async findOne(query: any): Promise<T | null> {
