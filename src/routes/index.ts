@@ -1,6 +1,7 @@
 import { Router } from 'express'
-import AuthRoutes from './auth/auth.routes'
 import { verifyToken } from '../middlewares/auth-guard'
+import AuthRoutes from './auth/auth.routes'
+import UserRoutes from './auth/user.routes'
 
 export const router = Router()
 
@@ -10,5 +11,6 @@ router.get('/ping', (_req, res) => {
 })
 
 router.use('/auth', AuthRoutes)
+router.use('/user', UserRoutes)
 
 router.use(verifyToken())
