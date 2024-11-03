@@ -42,4 +42,8 @@ export class EmployeeService {
   async findAll(): Promise<EmployeeDocument[]> {
     return this.employeeRepository.findAll(['user'], ['password'])
   }
+
+  async findOne(id: string): Promise<EmployeeDocument | null> {
+    return this.employeeRepository.findById(id, ['user'], ['password'])
+  }
 }
