@@ -3,10 +3,10 @@ import { z, ZodError } from 'zod'
 
 import { STATUS } from '../utils/constants'
 
-export function validateData(schema: z.ZodObject<any, any>) {
+export function validateBody(schema: z.ZodObject<any, any>) {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
-      schema.parse(req.body)
+      schema.strict().parse(req.body)
       next()
     } catch (error) {
       if (error instanceof ZodError) {

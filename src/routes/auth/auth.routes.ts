@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { validateData } from '../../_middlewares/schema-guard'
+import { validateBody } from '../../_middlewares/schema-guard'
 import { createUserDto } from '../../controllers/auth/dto/create-user.dto'
 import { AuthController } from '../../controllers/auth/auth.controller'
 import { loginDto } from '../../controllers/auth/dto/login.dto'
@@ -7,11 +7,11 @@ import { loginDto } from '../../controllers/auth/dto/login.dto'
 const router = Router()
 const authController = new AuthController()
 
-router.post('/register', validateData(createUserDto), (req, res) =>
+router.post('/register', validateBody(createUserDto), (req, res) =>
   authController.register(req, res)
 )
 
-router.post('/login', validateData(loginDto), (req, res) =>
+router.post('/login', validateBody(loginDto), (req, res) =>
   authController.login(req, res)
 )
 
