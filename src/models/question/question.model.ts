@@ -1,15 +1,20 @@
-import { model, Schema, Types } from 'mongoose'
+import { model, Schema, Types, Document } from 'mongoose'
 
 export interface Question {
+  evaluation: Types.ObjectId
   question: string
   answer: string
   score: number
-  manager: Types.ObjectId
 }
 
 export interface QuestionDocument extends Question, Document {}
 
 const questionSchema = new Schema<QuestionDocument>({
+  evaluation: {
+    type: Schema.Types.ObjectId,
+    ref: 'Evaluation',
+    required: true
+  },
   question: {
     type: String,
     required: true
@@ -20,11 +25,6 @@ const questionSchema = new Schema<QuestionDocument>({
   },
   score: {
     type: Number,
-    required: true
-  },
-  manager: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
     required: true
   }
 })
