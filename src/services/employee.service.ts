@@ -38,4 +38,8 @@ export class EmployeeService {
 
     return employee
   }
+
+  async findAll(): Promise<EmployeeDocument[]> {
+    return this.employeeRepository.findAll(['user'], ['password'])
+  }
 }
