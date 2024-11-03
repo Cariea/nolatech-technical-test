@@ -6,6 +6,7 @@ import { UserService } from '../../services/user.service'
 import { Types } from 'mongoose'
 import { StatusError } from '../../utils/responses/status-error'
 import { STATUS } from '../../utils/constants'
+//import { Roles } from '../../models/user/enums/roles.enum'
 
 export class EvaluationController {
   private evaluationService: EvaluationService
@@ -76,6 +77,28 @@ export class EvaluationController {
           manager as string
         )
       res.status(200).json({ evaluations })
+    } catch (error) {
+      res
+        .status(400)
+        .json({ message: error instanceof Error ? error.message : error })
+    }
+  }
+
+  async findOne(req: ExtendedRequest, res: Response): Promise<void> {
+    const { id } = req.params
+
+    try {
+      const evaluation = await this.evaluationService.findOne(id)
+
+      // if (req.user?.role === Roles.MANAGER) {
+      //   if (evaluation?.manager.toString() !== req.user?.id) {
+      //     throw new StatusError({
+      //       message: 'No tienes permiso para ver esta evaluación',
+      //       statusCode: STATUS.FORBIDDEN
+      //     })
+      //   }
+      // }
+      res.status(200).json({ evaluation })
     } catch (error) {
       res
         .status(400)

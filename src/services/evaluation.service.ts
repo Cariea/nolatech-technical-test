@@ -31,4 +31,8 @@ export class EvaluationService {
       manager: new Types.ObjectId(manager)
     })
   }
+
+  async findOne(id: string): Promise<EvaluationDocument | null> {
+    return this.evaluationRepository.findById(id)
+  }
 }
