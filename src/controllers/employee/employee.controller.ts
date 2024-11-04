@@ -21,7 +21,7 @@ export class EmployeeController {
         experience,
         department
       )
-      res.status(201).json({ user: newEmployee })
+      res.status(201).json({ employee: newEmployee })
     } catch (error) {
       res
         .status(400)

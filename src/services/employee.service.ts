@@ -64,7 +64,18 @@ export class EmployeeService {
   }
 
   async findOne(id: string): Promise<EmployeeDocument | null> {
-    return this.employeeRepository.findById(id, ['user'], ['password'])
+    const employee = await this.employeeRepository.findById(
+      id,
+      ['user'],
+      ['password']
+    )
+    if (!employee) {
+      throw new StatusError({
+        statusCode: STATUS.NOT_FOUND,
+        message: 'Empleado no encontrado'
+      })
+    }
+    return employee
   }
 
   async findByManager(managerId: string): Promise<EmployeeDocument[]> {
