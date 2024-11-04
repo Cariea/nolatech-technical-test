@@ -1,0 +1,384 @@
+{
+	"info": {
+		"_postman_id": "3d2f00af-0578-4497-897f-a7d27e918b9d",
+		"name": "nolatech-test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "27759497",
+		"_collection_link": "https://www.postman.com/workspace/nolatech-test~cdd66849-db6d-407b-b166-01e78e9995ad/collection/27759497-3d2f00af-0578-4497-897f-a7d27e918b9d?action=share&source=collection_link&creator=27759497"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Manager Jose\",\r\n    \"email\": \"managerjose@gmail.com\",\r\n    \"password\": \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:4000/auth/register"
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"adminarturo@mail.com\",\r\n    \"password\": \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:4000/auth/login"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Admin Arturo\",\r\n    \"email\": \"adminarturo@mail.com\",\r\n    \"password\": \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:4000/user/create"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Employee",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MjkxMzU5Y2E2MTM5Y2M3YThkOGM1YiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczMDc0NTE5MCwiZXhwIjoxNzMwODMxNTkwfQ.AVGMCuC8CTYe-s_OmvWd01J9Jg6vDXwWHUy4e1wuVaI"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Empleado Carlos\",\r\n    \"email\": \"empleadocarlos@gmail.com\",\r\n    \"password\": \"123456789\",\r\n    \"salary\": 100,\r\n    \"experience\":5,\r\n    \"department\": \"IT\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:4000/employees"
+					},
+					"response": []
+				},
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "findOne",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MjkxMzU5Y2E2MTM5Y2M3YThkOGM1YiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczMDc0NTE5MCwiZXhwIjoxNzMwODMxNTkwfQ.AVGMCuC8CTYe-s_OmvWd01J9Jg6vDXwWHUy4e1wuVaI"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:4000/employees/6727b349207f5c0abfcd55da"
+					},
+					"response": []
+				},
+				{
+					"name": "updateEmployee",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MjkxMzU5Y2E2MTM5Y2M3YThkOGM1YiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczMDc0NTE5MCwiZXhwIjoxNzMwODMxNTkwfQ.AVGMCuC8CTYe-s_OmvWd01J9Jg6vDXwWHUy4e1wuVaI"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"raul\",\r\n    \"email\":\"empleadoraul@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:4000/employees/6727cbf4cbdd3125e1da29b1"
+					},
+					"response": []
+				},
+				{
+					"name": "addManager",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3Mjg0ODRmMDI4OTdjMjI0Mzc4YTk4ZiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczMDcwNzEzMywiZXhwIjoxNzMwNzkzNTMzfQ.KsWnNSiQBuAjXz9BSvSGScsmXDpFuKqJEelmn81lR4U"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"managerId\": \"6728037b920e01efc1db6061\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:4000/employees/add-manager/672913e8c6a6e8b445a62db3"
+					},
+					"response": []
+				},
+				{
+					"name": "getByManager",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3Mjg0YmFiZjQ2NGJmNDg4OWUwOWU5NiIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNzMwNjk4MTg0LCJleHAiOjE3MzA3ODQ1ODR9.kEdyDM29SGCgp5z_XqzyPe4W8X_gCd9DViiaMpXNdhQ"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:4000/employees/by-manager"
+					},
+					"response": []
+				},
+				{
+					"name": "addEvaluationToEmployee",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MjgwMzdiOTIwZTAxZWZjMWRiNjA2MSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNzMwNzA5MDg0LCJleHAiOjE3MzA3OTU0ODR9.Vv9aW7IwWqU2j9yqMIoC0X56cENUg1dkD7mk0jgTbjM"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"evaluationId\":\"6728866edb0ce8dc85a69736\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:4000/employees/add-evaluation/672913e8c6a6e8b445a62db3"
+					},
+					"response": []
+				},
+				{
+					"name": "submitEvaluation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MjkxM2U4YzZhNmU4YjQ0NWE2MmRiMSIsInJvbGUiOiJlbXBsb3llZSIsImlhdCI6MTczMDc0NTY0MiwiZXhwIjoxNzMwODMyMDQyfQ.zTbsde0j-sFDg1pgT0-t4vNYfKbZHEEfQhphn3cOOEc"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"responses\":[\r\n        {\r\n            \"questionId\":\"6728869fdb0ce8dc85a6973f\",\r\n            \"answer\":\"1\"\r\n        },\r\n        {\r\n            \"questionId\":\"672886a8db0ce8dc85a69743\",\r\n            \"answer\":\"1\"\r\n        },\r\n        {\r\n            \"questionId\":\"672886b2db0ce8dc85a69745\",\r\n            \"answer\":\"3\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:4000/employees/submit-evaluation/6728866edb0ce8dc85a69735"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Evaluations",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MjgwMzdiOTIwZTAxZWZjMWRiNjA2MSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNzMwNzA2Njk2LCJleHAiOjE3MzA3OTMwOTZ9.PLtq7ORkLGU4O2EpzUKFoHoGWC6s4hM1Ap9bUGcjvPA"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"evaluacion 9696 n\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:4000/evaluations"
+					},
+					"response": []
+				},
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "findAllManagerEvaluations",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "findOne",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Questions",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MjdjYmY0Y2JkZDMxMjVlMWRhMjlhZiIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNzMwNjc2NjYxLCJleHAiOjE3MzA3NjMwNjF9.GvVAz_lmR9YvZ6SSVutdaWHf1noTGSfgDck2PLkkuyU"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"question\":\"Que es SRP\",\r\n    \"answer\":\"Principo de responsabilidad unica, es uno de los 5 principios SOLID\",\r\n    \"evaluationId\":\"6727fd7db368dc22f9f7154f\",\r\n    \"score\":10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:4000/questions"
+					},
+					"response": []
+				},
+				{
+					"name": "getAllQuestions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MjgwMzdiOTIwZTAxZWZjMWRiNjA2MSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNzMwNjg4NDgyLCJleHAiOjE3MzA3NzQ4ODJ9.kspjhbaMVoZEkgm1MonlM1OitfyX0WCIKnJN9OcGtuA"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:4000/questions"
+					},
+					"response": []
+				},
+				{
+					"name": "updateQuestion",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MjgwMzdiOTIwZTAxZWZjMWRiNjA2MSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNzMwNjg4NDgyLCJleHAiOjE3MzA3NzQ4ODJ9.kspjhbaMVoZEkgm1MonlM1OitfyX0WCIKnJN9OcGtuA"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"question\": \"Que es LOL\",\r\n    \"answer\": \"Un vicio\",\r\n    \"score\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:4000/questions/672836e17a0df8f017ac88da"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reports",
+			"item": [
+				{
+					"name": "EmployeeReport",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
