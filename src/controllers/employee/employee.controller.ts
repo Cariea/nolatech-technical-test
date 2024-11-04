@@ -133,4 +133,17 @@ export class EmployeeController {
         .json({ message: error instanceof Error ? error.message : error })
     }
   }
+
+  async getReport(req: ExtendedRequest, res: Response): Promise<void> {
+    const { employeeId } = req.params
+
+    try {
+      const report = await this.employeeService.getReport(employeeId as string)
+      res.status(200).json(report)
+    } catch (error) {
+      res
+        .status(400)
+        .json({ message: error instanceof Error ? error.message : error })
+    }
+  }
 }

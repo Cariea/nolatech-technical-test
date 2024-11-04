@@ -2,7 +2,8 @@ import bcrypt from 'bcrypt'
 import { MongooseRepository } from '../_repositories/mongoose-repository'
 import {
   EmployeeDocument,
-  EmployeeModel
+  EmployeeModel,
+  EvaluationSnapshot
 } from '../models/employee/employee.model'
 import { Departments } from '../models/employee/enums/departments.enum'
 import { Roles } from '../models/user/enums/roles.enum'
@@ -319,5 +320,48 @@ export class EmployeeService {
     )
 
     return updatedEmployee
+  }
+
+  async getReport(employeeId: string): Promise<{
+    employee: EmployeeDocument
+    answered: {
+      evaluationId: string
+      questions: any[]
+      assigned_at: Date | undefined
+      answared_at: Date | undefined
+      score: number
+    }[]
+    pending: EvaluationSnapshot[]
+  } | null> {
+    const employee = await this.employeeRepository.findById(employeeId)
+    if (!employee) {
+      throw new StatusError({
+        statusCode: STATUS.NOT_FOUND,
+        message: 'Empleado no encontrado'
+      })
+    }
+
+    const answered = employee.evaluations
+      .filter((evaluation) => evaluation.answared_at)
+      .map((evaluation) => {
+        const score = evaluation.questions.reduce(
+          (acc, question) => acc + question.score,
+          0
+        )
+        // Selecciona sólo las propiedades necesarias
+        return {
+          evaluationId: evaluation.evaluationId,
+          questions: evaluation.questions,
+          assigned_at: evaluation.assigned_at,
+          answared_at: evaluation.answared_at,
+          score
+        }
+      })
+
+    const pending = employee.evaluations.filter(
+      (evaluation) => !evaluation.answared_at
+    )
+
+    return { employee, answered, pending }
   }
 }

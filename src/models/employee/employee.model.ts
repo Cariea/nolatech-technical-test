@@ -1,14 +1,14 @@
 import { Schema, model, Document, Types } from 'mongoose'
 import { Departments } from './enums/departments.enum'
 
-interface QuestionSnapshot {
+export interface QuestionSnapshot {
   questionId: string
   question: string
   answer?: string
   score: number
 }
 
-interface EvaluationSnapshot {
+export interface EvaluationSnapshot {
   evaluationId: string
   name: string
   questions: QuestionSnapshot[]
