@@ -6,25 +6,44 @@ import { Roles } from '../models/user/enums/roles.enum'
 import { JWT_EXPIRATION, JWT_SECRET_KEY } from '../_config/environment'
 import { StatusError } from '../utils/responses/status-error'
 import { STATUS } from '../utils/constants'
+import { UserService } from './user.service'
 export class AuthService {
   private readonly userRepository: MongooseRepository<UserDocument>
+  private userServices: UserService
 
   constructor() {
     this.userRepository = new MongooseRepository(UserModel)
+    this.userServices = new UserService()
   }
 
   async register(
     name: string,
     email: string,
     password: string
-  ): Promise<UserDocument> {
-    const hashedPassword = await bcrypt.hash(password, 10)
-    return this.userRepository.create({
+  ): Promise<UserDocument | null> {
+    const userExists = await this.userRepository.findOne({ email })
+
+    if (userExists) {
+      throw new StatusError({
+        statusCode: STATUS.CONFLICT,
+        message: 'Ya existe un usuario con ese email'
+      })
+    }
+
+    const newUser = await this.userServices.create(
       name,
       email,
-      password: hashedPassword,
-      role: Roles.MANAGER
-    })
+      password,
+      Roles.MANAGER
+    )
+
+    const userWithoutPassword = await this.userRepository.findById(
+      newUser._id as string,
+      [],
+      ['password']
+    )
+
+    return userWithoutPassword
   }
 
   async login(email: string, password: string): Promise<string | null> {
