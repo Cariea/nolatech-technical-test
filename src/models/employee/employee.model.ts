@@ -21,6 +21,8 @@ export interface EmployeeInterface {
   evaluations: EvaluationSnapshot[]
   salary: number
   experience: number
+  created_at?: Date
+  answared_at?: Date
 }
 export interface EmployeeDocument extends EmployeeInterface, Document {}
 
@@ -75,6 +77,11 @@ const employeeSchema = new Schema<EmployeeDocument>({
       created_at: {
         type: Date,
         default: Date.now
+      },
+      answared_at: {
+        type: Date,
+        required: false,
+        default: null
       }
     }
   ],
