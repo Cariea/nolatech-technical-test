@@ -4,7 +4,7 @@ import AuthRoutes from './auth/auth.routes'
 import UserRoutes from './user/user.routes'
 import EmployeeRoutes from './employee/employee.routes'
 import EvaluationsRoutes from './evaluations/evaluation.routes'
-
+import QuestionsRoutes from './questions/question.routes'
 export const router = Router()
 
 // Test endpoint
@@ -19,3 +19,4 @@ router.use(verifyToken())
 
 router.use('/employees', EmployeeRoutes)
 router.use('/evaluations', EvaluationsRoutes)
+router.use('/questions', QuestionsRoutes)
