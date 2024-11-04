@@ -18,7 +18,7 @@ export class EvaluationController {
   }
 
   async create(req: ExtendedRequest, res: Response): Promise<void> {
-    const { questions, name } = req.body
+    const { name } = req.body
     const manager = req.user?.id
     try {
       const managerDocument = await this.userService.findById(
@@ -32,7 +32,6 @@ export class EvaluationController {
         })
       }
       const newEvaluation = await this.evaluationService.create(
-        questions,
         name,
         managerDocument._id as Types.ObjectId
       )

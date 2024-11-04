@@ -16,11 +16,10 @@ export class EvaluationService {
   }
 
   async create(
-    questions: Types.ObjectId[],
     name: string,
     manager: Types.ObjectId
   ): Promise<EvaluationDocument> {
-    return await this.evaluationRepository.create({ questions, name, manager })
+    return await this.evaluationRepository.create({ name, manager })
   }
 
   async findAll(): Promise<EvaluationDocument[]> {
@@ -61,7 +60,6 @@ export class EvaluationService {
     }
 
     await this.evaluationRepository.update(evaluationId, {
-      questions: data.questions as unknown as Types.ObjectId[],
       name: data.name
     })
 
