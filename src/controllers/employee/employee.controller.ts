@@ -65,4 +65,21 @@ export class EmployeeController {
         .json({ message: error instanceof Error ? error.message : error })
     }
   }
+
+  async addManager(req: Request, res: Response): Promise<void> {
+    const { managerId } = req.body
+    const { employeeId } = req.params
+
+    try {
+      const updatedEmployee = await this.employeeService.addManager(
+        employeeId,
+        managerId
+      )
+      res.status(200).json(updatedEmployee)
+    } catch (error) {
+      res
+        .status(400)
+        .json({ message: error instanceof Error ? error.message : error })
+    }
+  }
 }

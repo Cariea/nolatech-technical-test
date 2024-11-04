@@ -105,4 +105,37 @@ export class EmployeeService {
 
     return updatedEmployee
   }
+
+  async addManager(
+    employeeId: string,
+    managerId: string
+  ): Promise<EmployeeDocument | null> {
+    const employee = await this.employeeRepository.findById(employeeId)
+    if (!employee) {
+      throw new StatusError({
+        statusCode: STATUS.NOT_FOUND,
+        message: 'Empleado no encontrado'
+      })
+    }
+
+    const manager = await this.userRepository.findById(managerId)
+    if (!manager) {
+      throw new StatusError({
+        statusCode: STATUS.NOT_FOUND,
+        message: 'Manager no encontrado'
+      })
+    }
+
+    await this.employeeRepository.update(employeeId, {
+      manager: new Types.ObjectId(managerId)
+    })
+
+    const updatedEmployee = await this.employeeRepository.findById(
+      employeeId,
+      ['user'],
+      ['password']
+    )
+
+    return updatedEmployee
+  }
 }

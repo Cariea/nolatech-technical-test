@@ -6,6 +6,10 @@ import { hasAuthorization } from '../../_middlewares/auth-guard'
 import { Roles } from '../../models/user/enums/roles.enum'
 import { userIdSchema } from '../../controllers/employee/dto/get-by-id.employee.dto'
 import { updateEmployeeDto } from '../../controllers/employee/dto/update-employee.dto'
+import {
+  addManagerParamsDto,
+  addManagerBodyDto
+} from '../../controllers/employee/dto/add-manager.dto'
 
 const router = Router()
 const employeeController = new EmployeeController()
@@ -34,6 +38,14 @@ router.put(
   validateParams(userIdSchema),
   validateBody(updateEmployeeDto),
   (req, res) => employeeController.update(req, res)
+)
+
+router.patch(
+  '/add-manager/:employeeId',
+  hasAuthorization([Roles.ADMIN]),
+  validateParams(addManagerParamsDto),
+  validateBody(addManagerBodyDto),
+  (req, res) => employeeController.addManager(req, res)
 )
 
 export default router
