@@ -1,8 +1,9 @@
 # nolatech-technical-test
-## Description
+### Descripcion
+  
 Prueba Técnica para Candidatura al Rol de Backend Developer - Nolatech
 
-## Project setup
+## Configuracion de proyecto
 - Paso 1: clonar el proyecto (asegurese de tener git instalado)
 ```bash
 $ git clone install https://github.com/Cariea/nolatech-technical-test.git
