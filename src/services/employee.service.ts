@@ -200,8 +200,19 @@ export class EmployeeService {
       })
     }
 
+    const findEvaluationIndex = employee.evaluations.findIndex(
+      (evaluation) => evaluation.evaluationId === evaluationId
+    )
+
+    if (findEvaluationIndex !== -1) {
+      throw new StatusError({
+        statusCode: STATUS.BAD_REQUEST,
+        message: 'Ya has asignado esta evaluación al empleado'
+      })
+    }
+
     const questions = await this.questionRepository.find({
-      evaluation: new Types.ObjectId(evaluationId)
+      evaluation: evaluationId
     })
 
     if (questions.length === 0) {
@@ -212,7 +223,7 @@ export class EmployeeService {
     }
 
     const newEvaluation = {
-      id: new Types.ObjectId(evaluationId),
+      evaluationId: evaluationId,
       name: evaluation.name,
       questions: questions.map((question) => ({
         questionId: question._id,
@@ -228,6 +239,81 @@ export class EmployeeService {
 
     const updatedEmployee = await this.employeeRepository.findById(
       employeeId,
+      ['user'],
+      ['password']
+    )
+
+    return updatedEmployee
+  }
+
+  async submitEvaluation(
+    userId: string,
+    evaluationId: string,
+    responses: { questionId: string; answer: string }[]
+  ): Promise<EmployeeDocument | null> {
+    const user = await this.userRepository.findById(userId)
+    if (!user) {
+      throw new StatusError({
+        statusCode: STATUS.NOT_FOUND,
+        message: 'Usuario no encontrado'
+      })
+    }
+
+    const employee = await this.employeeRepository.findOne({ user: userId })
+    if (!employee) {
+      throw new StatusError({
+        statusCode: STATUS.NOT_FOUND,
+        message: 'Empleado no encontrado'
+      })
+    }
+
+    const evaluationIndex = employee.evaluations.findIndex(
+      (evaluation) => evaluation.evaluationId.toString() === evaluationId
+    )
+
+    if (evaluationIndex === -1) {
+      throw new StatusError({
+        statusCode: STATUS.NOT_FOUND,
+        message: 'Evaluación no encontrada'
+      })
+    }
+
+    const evaluation = employee.evaluations[evaluationIndex]
+
+    if (evaluation.answared_at) {
+      throw new StatusError({
+        statusCode: STATUS.BAD_REQUEST,
+        message: 'Ya has respondido esta evaluación'
+      })
+    }
+
+    employee.evaluations[evaluationIndex] = {
+      ...evaluation,
+      evaluationId: evaluation.evaluationId,
+      questions: evaluation.questions.map((question) => {
+        const response = responses.find(
+          (response) => response.questionId === question.questionId.toString()
+        )
+
+        if (!response) {
+          return question
+        }
+
+        return {
+          ...question,
+          answer: response.answer
+        }
+      }),
+      answared_at: new Date(),
+      assigned_at: evaluation.assigned_at
+    }
+
+    await this.employeeRepository.update(employee.id, {
+      evaluations: employee.evaluations
+    })
+
+    const updatedEmployee = await this.employeeRepository.findById(
+      employee.id,
       ['user'],
       ['password']
     )

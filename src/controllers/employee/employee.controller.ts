@@ -114,4 +114,23 @@ export class EmployeeController {
         .json({ message: error instanceof Error ? error.message : error })
     }
   }
+
+  async submitEvaluation(req: ExtendedRequest, res: Response): Promise<void> {
+    const employeeId = req.user?.id
+    const { evaluationId } = req.params
+    const responses = req.body.responses
+
+    try {
+      const employee = await this.employeeService.submitEvaluation(
+        employeeId as string,
+        evaluationId,
+        responses
+      )
+      res.status(200).json(employee)
+    } catch (error) {
+      res
+        .status(400)
+        .json({ message: error instanceof Error ? error.message : error })
+    }
+  }
 }

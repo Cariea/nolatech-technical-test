@@ -44,6 +44,7 @@ export class QuestionService {
       })
     }
 
+    console.log(evaluationExists.manager.toString(), managerId)
     if (evaluationExists.manager.toString() !== managerId) {
       throw new StatusError({
         message: 'Evaluation not found',

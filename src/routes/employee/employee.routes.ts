@@ -14,6 +14,10 @@ import {
   addEvaluationBodyDto,
   addEvaluationParamsDto
 } from '../../controllers/employee/dto/add-evaluation.dto'
+import {
+  submitEvaluationBodyDto,
+  submitEvaluationParamsDto
+} from '../../controllers/employee/dto/submit-evaluation.dto'
 
 const router = Router()
 const employeeController = new EmployeeController()
@@ -62,6 +66,14 @@ router.patch(
   validateParams(addEvaluationParamsDto),
   validateBody(addEvaluationBodyDto),
   (req, res) => employeeController.addEvaluation(req, res)
+)
+
+router.patch(
+  '/submit-evaluation/:evaluationId',
+  hasAuthorization([Roles.EMPLOYEE]),
+  validateParams(submitEvaluationParamsDto),
+  validateBody(submitEvaluationBodyDto),
+  (req, res) => employeeController.submitEvaluation(req, res)
 )
 
 export default router

@@ -2,16 +2,18 @@ import { Schema, model, Document, Types } from 'mongoose'
 import { Departments } from './enums/departments.enum'
 
 interface QuestionSnapshot {
-  questionID: Types.ObjectId
+  questionId: string
   question: string
   answer?: string
   score: number
 }
 
 interface EvaluationSnapshot {
-  id: Types.ObjectId
+  evaluationId: string
   name: string
   questions: QuestionSnapshot[]
+  assigned_at?: Date
+  answared_at?: Date
 }
 
 export interface EmployeeInterface {
@@ -21,8 +23,6 @@ export interface EmployeeInterface {
   evaluations: EvaluationSnapshot[]
   salary: number
   experience: number
-  created_at?: Date
-  answared_at?: Date
 }
 export interface EmployeeDocument extends EmployeeInterface, Document {}
 
@@ -44,9 +44,8 @@ const employeeSchema = new Schema<EmployeeDocument>({
   },
   evaluations: [
     {
-      id: {
-        type: Schema.Types.ObjectId,
-        ref: 'Evaluation',
+      evaluationId: {
+        type: String,
         required: true
       },
       name: {
@@ -56,8 +55,7 @@ const employeeSchema = new Schema<EmployeeDocument>({
       questions: [
         {
           questionId: {
-            type: Schema.Types.ObjectId,
-            ref: 'Question',
+            type: String,
             required: true
           },
           question: {
@@ -74,7 +72,7 @@ const employeeSchema = new Schema<EmployeeDocument>({
           }
         }
       ],
-      created_at: {
+      assigned_at: {
         type: Date,
         default: Date.now
       },
