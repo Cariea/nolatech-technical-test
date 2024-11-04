@@ -26,4 +26,17 @@ export class QuestionController {
         .json({ message: error instanceof Error ? error.message : error })
     }
   }
+
+  async findAll(req: ExtendedRequest, res: Response): Promise<void> {
+    try {
+      const questions = await this.questionService.findAll(
+        req.user?.id as string
+      )
+      res.status(200).json({ questions })
+    } catch (error) {
+      res
+        .status(400)
+        .json({ message: error instanceof Error ? error.message : error })
+    }
+  }
 }

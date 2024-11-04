@@ -19,4 +19,8 @@ router.post(
   (req, res) => questionController.create(req, res)
 )
 
+router.get('/', hasAuthorization([Roles.MANAGER]), (req, res) =>
+  questionController.findAll(req, res)
+)
+
 export default router

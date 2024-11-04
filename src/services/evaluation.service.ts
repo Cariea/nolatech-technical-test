@@ -38,7 +38,6 @@ export class EvaluationService {
     return this.evaluationRepository.findById(id)
   }
 
-  //Aun no se puede probar necesito las questions para validar si existen
   async update(
     evaluationId: string,
     managerId: string,
