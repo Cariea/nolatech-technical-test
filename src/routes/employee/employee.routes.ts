@@ -18,6 +18,10 @@ router.get('/', hasAuthorization([Roles.ADMIN]), (req, res) =>
   employeeController.findAll(req, res)
 )
 
+router.get('/by-manager', hasAuthorization([Roles.MANAGER]), (req, res) =>
+  employeeController.findByManager(req, res)
+)
+
 router.get(
   '/:id',
   hasAuthorization([Roles.ADMIN]),

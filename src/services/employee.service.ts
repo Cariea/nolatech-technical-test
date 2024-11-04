@@ -54,6 +54,12 @@ export class EmployeeService {
     return this.employeeRepository.findById(id, ['user'], ['password'])
   }
 
+  async findByManager(managerId: string): Promise<EmployeeDocument[]> {
+    return this.employeeRepository.find({
+      manager: new Types.ObjectId(managerId)
+    })
+  }
+
   async update(
     id: string,
     data: UpdateEmployeeDto

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { EmployeeService } from '../../services/employee.service'
+import { ExtendedRequest } from '../../_middlewares/auth-guard'
 
 export class EmployeeController {
   private employeeService: EmployeeService
@@ -45,6 +46,18 @@ export class EmployeeController {
     try {
       const employee = await this.employeeService.findOne(id)
       res.status(200).json({ employee })
+    } catch (error) {
+      res
+        .status(400)
+        .json({ message: error instanceof Error ? error.message : error })
+    }
+  }
+
+  async findByManager(req: ExtendedRequest, res: Response): Promise<void> {
+    const id = req.user?.id
+    try {
+      const employees = await this.employeeService.findByManager(id as string)
+      res.status(200).json({ employees })
     } catch (error) {
       res
         .status(400)
