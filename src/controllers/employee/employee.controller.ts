@@ -65,6 +65,25 @@ export class EmployeeController {
     }
   }
 
+  async addEvaluation(req: ExtendedRequest, res: Response): Promise<void> {
+    const { employeeId } = req.params
+    const { evaluationId } = req.body
+    const managerId = req.user?.id
+    console.log(managerId)
+    try {
+      const updatedEmployee = await this.employeeService.addEvaluation(
+        employeeId,
+        evaluationId,
+        managerId as string
+      )
+      res.status(200).json(updatedEmployee)
+    } catch (error) {
+      res
+        .status(400)
+        .json({ message: error instanceof Error ? error.message : error })
+    }
+  }
+
   async update(req: Request, res: Response): Promise<void> {
     const { id } = req.params
     const data = req.body

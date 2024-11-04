@@ -1,4 +1,4 @@
-import { Model, Document, FilterQuery } from 'mongoose'
+import { Model, Document, FilterQuery, UpdateQuery } from 'mongoose'
 import { BaseRepository } from './interfaces/base-repository.interface'
 
 export class MongooseRepository<T extends Document>
@@ -68,7 +68,7 @@ export class MongooseRepository<T extends Document>
     return await query.exec()
   }
 
-  async update(id: string, item: Partial<T>): Promise<T | null> {
+  async update(id: string, item: UpdateQuery<T>): Promise<T | null> {
     return await this.model.findByIdAndUpdate(id, item, { new: true }).exec()
   }
 

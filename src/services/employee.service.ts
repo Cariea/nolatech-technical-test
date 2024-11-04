@@ -11,13 +11,25 @@ import { Types } from 'mongoose'
 import { UpdateEmployeeDto } from '../controllers/employee/dto/update-employee.dto'
 import { StatusError } from '../utils/responses/status-error'
 import { STATUS } from '../utils/constants'
+import {
+  EvaluationDocument,
+  EvaluationModel
+} from '../models/evaluation/evaluation.model'
+import {
+  QuestionDocument,
+  QuestionModel
+} from '../models/question/question.model'
 export class EmployeeService {
   private readonly employeeRepository: MongooseRepository<EmployeeDocument>
   private readonly userRepository: MongooseRepository<UserDocument>
+  private readonly evaluationRepository: MongooseRepository<EvaluationDocument>
+  private readonly questionRepository: MongooseRepository<QuestionDocument>
 
   constructor() {
     this.employeeRepository = new MongooseRepository(EmployeeModel)
     this.userRepository = new MongooseRepository(UserModel)
+    this.evaluationRepository = new MongooseRepository(EvaluationModel)
+    this.questionRepository = new MongooseRepository(QuestionModel)
   }
 
   async create(
@@ -134,6 +146,84 @@ export class EmployeeService {
 
     await this.employeeRepository.update(employeeId, {
       manager: new Types.ObjectId(managerId)
+    })
+
+    const updatedEmployee = await this.employeeRepository.findById(
+      employeeId,
+      ['user'],
+      ['password']
+    )
+
+    return updatedEmployee
+  }
+
+  async addEvaluation(
+    employeeId: string,
+    evaluationId: string,
+    managerId: string
+  ): Promise<EmployeeDocument | null> {
+    const employee = await this.employeeRepository.findById(employeeId)
+    if (!employee) {
+      throw new StatusError({
+        statusCode: STATUS.NOT_FOUND,
+        message: 'Empleado no encontrado'
+      })
+    }
+
+    if (!employee.manager) {
+      throw new StatusError({
+        statusCode: STATUS.BAD_REQUEST,
+        message: 'El empleado no tiene manager asignado'
+      })
+    }
+
+    if (employee.manager.toString() !== managerId) {
+      throw new StatusError({
+        statusCode: STATUS.UNAUTHORIZED,
+        message: 'No eres el manager de este empleado'
+      })
+    }
+
+    const evaluation = await this.evaluationRepository.findById(evaluationId)
+
+    if (!evaluation) {
+      throw new StatusError({
+        statusCode: STATUS.NOT_FOUND,
+        message: 'Evaluación no encontrada'
+      })
+    }
+
+    if (evaluation.manager.toString() !== managerId) {
+      throw new StatusError({
+        statusCode: STATUS.UNAUTHORIZED,
+        message: 'No tienes una evaluación con este id'
+      })
+    }
+
+    const questions = await this.questionRepository.find({
+      evaluation: new Types.ObjectId(evaluationId)
+    })
+
+    if (questions.length === 0) {
+      throw new StatusError({
+        statusCode: STATUS.BAD_REQUEST,
+        message: 'La evaluación no tiene preguntas'
+      })
+    }
+
+    const newEvaluation = {
+      id: new Types.ObjectId(evaluationId),
+      name: evaluation.name,
+      questions: questions.map((question) => ({
+        questionId: question._id,
+        question: question.question,
+        answer: '',
+        score: question.score
+      }))
+    }
+
+    await this.employeeRepository.update(employeeId, {
+      $push: { evaluations: newEvaluation }
     })
 
     const updatedEmployee = await this.employeeRepository.findById(

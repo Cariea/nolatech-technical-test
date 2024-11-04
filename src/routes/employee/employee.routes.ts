@@ -10,6 +10,10 @@ import {
   addManagerParamsDto,
   addManagerBodyDto
 } from '../../controllers/employee/dto/add-manager.dto'
+import {
+  addEvaluationBodyDto,
+  addEvaluationParamsDto
+} from '../../controllers/employee/dto/add-evaluation.dto'
 
 const router = Router()
 const employeeController = new EmployeeController()
@@ -50,6 +54,14 @@ router.patch(
   validateParams(addManagerParamsDto),
   validateBody(addManagerBodyDto),
   (req, res) => employeeController.addManager(req, res)
+)
+
+router.patch(
+  '/add-evaluation/:employeeId',
+  hasAuthorization([Roles.MANAGER]),
+  validateParams(addEvaluationParamsDto),
+  validateBody(addEvaluationBodyDto),
+  (req, res) => employeeController.addEvaluation(req, res)
 )
 
 export default router

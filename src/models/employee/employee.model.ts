@@ -2,7 +2,8 @@ import { Schema, model, Document, Types } from 'mongoose'
 import { Departments } from './enums/departments.enum'
 
 interface QuestionSnapshot {
-  question: Types.ObjectId
+  questionID: Types.ObjectId
+  question: string
   answer?: string
   score: number
 }
@@ -52,9 +53,13 @@ const employeeSchema = new Schema<EmployeeDocument>({
       },
       questions: [
         {
-          question: {
+          questionId: {
             type: Schema.Types.ObjectId,
             ref: 'Question',
+            required: true
+          },
+          question: {
+            type: String,
             required: true
           },
           answer: {
@@ -66,7 +71,11 @@ const employeeSchema = new Schema<EmployeeDocument>({
             required: true
           }
         }
-      ]
+      ],
+      created_at: {
+        type: Date,
+        default: Date.now
+      }
     }
   ],
   salary: {
