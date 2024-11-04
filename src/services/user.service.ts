@@ -13,14 +13,15 @@ export class UserService {
   async create(
     name: string,
     email: string,
-    password: string
+    password: string,
+    role: Roles
   ): Promise<UserDocument> {
     const hashedPassword = await bcrypt.hash(password, 10)
     return this.userRepository.create({
       name,
       email,
       password: hashedPassword,
-      role: Roles.ADMIN
+      role: role
     })
   }
 

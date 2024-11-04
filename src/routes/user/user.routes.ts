@@ -7,7 +7,7 @@ const router = Router()
 const authController = new UserController()
 
 router.post('/create', validateBody(createUserDto), (req, res) =>
-  authController.create(req, res)
+  authController.createAdmin(req, res)
 )
 
 export default router
